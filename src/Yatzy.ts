@@ -1,14 +1,5 @@
-export default class Yatzy {
-  private dice: number[];
+export class Yatzy {
 
-  constructor(d1: number, d2: number, d3: number, d4: number, _5: number) {
-    this.dice = [];
-    this.dice[0] = d1;
-    this.dice[1] = d2;
-    this.dice[2] = d3;
-    this.dice[3] = d4;
-    this.dice[4] = _5;
-  }
 
   static chance(d1: number, d2: number, d3: number, d4: number, d5: number): number {
     var total = 0;
@@ -31,35 +22,27 @@ export default class Yatzy {
   }
 
   static ones(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var sum = 0;
-    if (d1 == 1) sum++;
-    if (d2 == 1) sum++;
-    if (d3 == 1) sum++;
-    if (d4 == 1) sum++;
-    if (d5 == 1) sum++;
-
-    return sum;
+    return this.filterNumbersByThenCalculateSum(1, d1, d2, d3, d4, d5)
   }
 
   static twos(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var sum = 0;
-    if (d1 == 2) sum += 2;
-    if (d2 == 2) sum += 2;
-    if (d3 == 2) sum += 2;
-    if (d4 == 2) sum += 2;
-    if (d5 == 2) sum += 2;
-    return sum;
+    return this.filterNumbersByThenCalculateSum(2, d1, d2, d3, d4, d5)
   }
 
   static threes(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var s;
-    s = 0;
-    if (d1 == 3) s += 3;
-    if (d2 == 3) s += 3;
-    if (d3 == 3) s += 3;
-    if (d4 == 3) s += 3;
-    if (d5 == 3) s += 3;
-    return s;
+    return this.filterNumbersByThenCalculateSum(3, d1, d2, d3, d4, d5)
+  }
+
+  static fours(d1: number, d2: number, d3: number, d4: number, d5: number): number {
+    return this.filterNumbersByThenCalculateSum(4, d1, d2, d3, d4, d5)
+  }
+
+  static fives(d1: number, d2: number, d3: number, d4: number, d5: number): number {
+    return this.filterNumbersByThenCalculateSum(5, d1, d2, d3, d4, d5)
+  }
+
+  static sixes(d1: number, d2: number, d3: number, d4: number, d5: number): number {
+    return this.filterNumbersByThenCalculateSum(6, d1, d2, d3, d4, d5)
   }
 
   static score_pair(d1: number, d2: number, d3: number, d4: number, d5: number): number {
@@ -171,27 +154,9 @@ export default class Yatzy {
     else return 0;
   }
 
-  fours(): number {
-    var sum;
-    sum = 0;
-    for (let at = 0; at != 5; at++) {
-      if (this.dice[at] == 4) {
-        sum += 4;
-      }
-    }
-    return sum;
-  }
-
-  fives(): number {
-    let s = 0;
-    var i;
-    for (i = 0; i < this.dice.length; i++) if (this.dice[i] == 5) s = s + 5;
-    return s;
-  }
-
-  sixes(): number {
-    let sum = 0;
-    for (var at = 0; at < this.dice.length; at++) if (this.dice[at] == 6) sum = sum + 6;
-    return sum;
+  private static filterNumbersByThenCalculateSum(filter: number, d1: number, d2: number, d3: number, d4: number, d5: number): number {
+    return [d1, d2, d3, d4, d5]
+      .filter(n => n === filter)
+      .reduce((acc, curr) => acc += curr, 0);
   }
 }

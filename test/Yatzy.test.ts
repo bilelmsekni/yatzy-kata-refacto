@@ -1,6 +1,6 @@
 import assert from 'assert';
 
-import Yatzy from '../src/Yatzy';
+import { Yatzy } from '../src/Yatzy';
 
 describe('Chance category', () => {
   it('should score sum of all dice when player chooses chance category', () => {
@@ -55,34 +55,34 @@ describe('Threes category', () => {
 
 describe('Fours category', () => {
   it('should score the sum of fours when player chooses fours category', () => {
-    assert.strictEqual(12, new Yatzy(4, 4, 4, 5, 5).fours());
-    assert.strictEqual(8, new Yatzy(4, 4, 5, 5, 5).fours());
-    assert.strictEqual(4, new Yatzy(4, 5, 5, 5, 5).fours());
+    assert.strictEqual(12, Yatzy.fours(4, 4, 4, 5, 5));
+    assert.strictEqual(8, Yatzy.fours(4, 4, 5, 5, 5));
+    assert.strictEqual(4, Yatzy.fours(4, 5, 5, 5, 5));
   });
   it('should score 0 when player chooses fours category but no fours appear', () => {
-    assert.strictEqual(0, new Yatzy(6, 2, 1, 5, 5).fours());
+    assert.strictEqual(0, Yatzy.fours(6, 2, 1, 5, 5));
   });
 });
 
 describe('Fives category', () => {
   it('should score the sum of fives when player chooses fives category', () => {
-    assert.strictEqual(10, new Yatzy(4, 4, 4, 5, 5).fives());
-    assert.strictEqual(15, new Yatzy(4, 4, 5, 5, 5).fives());
-    assert.strictEqual(20, new Yatzy(4, 5, 5, 5, 5).fives());
+    assert.strictEqual(10, Yatzy.fives(4, 4, 4, 5, 5));
+    assert.strictEqual(15, Yatzy.fives(4, 4, 5, 5, 5));
+    assert.strictEqual(20, Yatzy.fives(4, 5, 5, 5, 5));
   });
 
   it('should score 0 when player chooses fives category but no fives appear', () => {
-    assert.strictEqual(0, new Yatzy(4, 4, 4, 3, 2).fives());
+    assert.strictEqual(0, Yatzy.fives(4, 4, 4, 3, 2));
   });
 });
 
 describe('Sixes category', () => {
   it('should score the sum of sixes when player chooses sixes category', () => {
-    assert.strictEqual(6, new Yatzy(4, 4, 6, 5, 5).sixes());
-    assert.strictEqual(18, new Yatzy(6, 5, 6, 6, 5).sixes());
+    assert.strictEqual(6, Yatzy.sixes(4, 4, 6, 5, 5));
+    assert.strictEqual(18, Yatzy.sixes(6, 5, 6, 6, 5));
   });
   it('should score 0 when player chooses sixes category but no sixes appear', () => {
-    assert.strictEqual(0, new Yatzy(4, 4, 4, 5, 5).sixes());
+    assert.strictEqual(0, Yatzy.sixes(4, 4, 4, 5, 5));
   });
 });
 
