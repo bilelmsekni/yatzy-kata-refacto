@@ -12,6 +12,19 @@ export class RollResult {
         return this;
     }
 
+    static countAppearancesByDiceValue(): { [key: number]: number } {
+        if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
+        const appearancesByDiceValues = this.rollResult.reduce((acc: { [key: number]: number }, curr: number) => {
+            if (acc[curr]) {
+                acc[curr]++;
+            } else {
+                acc[curr] = 1;
+            }
+            return acc;
+        }, {});;
+        return appearancesByDiceValues;
+    }
+
     static sum(): number {
         if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
         return this.rollResult

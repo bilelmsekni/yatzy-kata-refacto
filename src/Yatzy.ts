@@ -3,18 +3,11 @@ import { RollResult } from "./RollResult";
 export class Yatzy {
 
   static chance(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return d1 + d2 + d3 + d4 + d5;
+    return RollResult.init(d1, d2, d3, d4, d5).sum();
   }
 
   static yatzy(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
-      if (acc[curr]) {
-        acc[curr]++;
-      } else {
-        acc[curr] = 1;
-      }
-      return acc;
-    }, {});
+    const appearancesByDiceValues = RollResult.init(d1, d2, d3, d4, d5).countAppearancesByDiceValue();
     return Object.values(appearancesByDiceValues).includes(5) ? 50 : 0;
   }
 
