@@ -68,38 +68,12 @@ export class Yatzy {
   }
 
   static threeOfAKind(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
-      if (acc[curr]) {
-        acc[curr]++;
-      } else {
-        acc[curr] = 1;
-      }
-      return acc;
-    }, {} as { [key: number]: number });
-
-    const threeOfAKindKey = Object.keys(appearancesByDiceValues)
-      .map(key => +key)
-      .filter(key => appearancesByDiceValues[key] >= 3)
-      .shift();
-
-    return threeOfAKindKey ? threeOfAKindKey * 3 : 0;
+    const threeOfAKindValue = RollResult.init(d1, d2, d3, d4, d5).findValueWithThreeAppearances();
+    return threeOfAKindValue ? threeOfAKindValue * 3 : 0;
   }
 
   static fourOfAKind(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
-      if (acc[curr]) {
-        acc[curr]++;
-      } else {
-        acc[curr] = 1;
-      }
-      return acc;
-    }, {} as { [key: number]: number });
-
-    const fourOfAKindKey = Object.keys(appearancesByDiceValues)
-      .map(key => +key)
-      .filter(key => appearancesByDiceValues[key] >= 4)
-      .shift();
-
+    const fourOfAKindKey = RollResult.init(d1, d2, d3, d4, d5).findValueWithFourAppearances();
     return fourOfAKindKey ? fourOfAKindKey * 4 : 0;
   }
 

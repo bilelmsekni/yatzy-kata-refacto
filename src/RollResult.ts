@@ -18,6 +18,26 @@ export class RollResult {
         return Object.values(appearancesByDiceValues).includes(5);
     }
 
+    static findValueWithThreeAppearances(): number | undefined {
+        if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
+        const appearancesByDiceValues = this.countAppearancesByDiceValue(this.rollResult);
+        const threeOfAKindKey = Object.keys(appearancesByDiceValues)
+            .map(key => +key)
+            .filter(key => appearancesByDiceValues[key] >= 3)
+            .shift();
+        return threeOfAKindKey;
+    }
+
+    static findValueWithFourAppearances(): number | undefined {
+        if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
+        const appearancesByDiceValues = this.countAppearancesByDiceValue(this.rollResult);
+        const threeOfAKindKey = Object.keys(appearancesByDiceValues)
+            .map(key => +key)
+            .filter(key => appearancesByDiceValues[key] >= 4)
+            .shift();
+        return threeOfAKindKey;
+    }
+
     static findHighestPairs(): number[] {
         if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
         const appearancesByDiceValues = this.countAppearancesByDiceValue(this.rollResult);
