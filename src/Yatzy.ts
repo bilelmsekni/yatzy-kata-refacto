@@ -13,7 +13,7 @@ export class Yatzy {
         acc[curr] = 1;
       }
       return acc;
-    }, {})
+    }, {});
     return Object.values(appearancesByDiceValues).includes(5) ? 50 : 0;
   }
 
@@ -41,16 +41,22 @@ export class Yatzy {
     return this.filterNumbersByThenCalculateSum(6, d1, d2, d3, d4, d5)
   }
 
-  static score_pair(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-    counts[d1 - 1]++;
-    counts[d2 - 1]++;
-    counts[d3 - 1]++;
-    counts[d4 - 1]++;
-    counts[d5 - 1]++;
-    var at;
-    for (at = 0; at != 6; at++) if (counts[6 - at - 1] >= 2) return (6 - at) * 2;
-    return 0;
+  static pair(d1: number, d2: number, d3: number, d4: number, d5: number): number {
+    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
+      if (acc[curr]) {
+        acc[curr]++;
+      } else {
+        acc[curr] = 1;
+      }
+      return acc;
+    }, {} as { [key: number]: number });
+
+    const highestPair = Object.keys(appearancesByDiceValues)
+      .map(key => +key)
+      .filter(key => appearancesByDiceValues[key] >= 2)
+      .sort((a, b) => b - a)
+      .shift()
+    return highestPair ? highestPair * 2 : 0;
   }
 
   static two_pair(d1: number, d2: number, d3: number, d4: number, d5: number): number {

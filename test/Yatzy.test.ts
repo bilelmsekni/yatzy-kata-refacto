@@ -88,23 +88,23 @@ describe('Sixes category', () => {
 
 describe('Pair category', () => {
   it('should score the sum of the highest pair when user chooses pair category', () => {
-    assert.strictEqual(6, Yatzy.score_pair(3, 4, 3, 5, 6));
-    assert.strictEqual(10, Yatzy.score_pair(5, 3, 3, 3, 5));
-    assert.strictEqual(12, Yatzy.score_pair(5, 3, 6, 6, 5));
+    assert.strictEqual(6, Yatzy.pair(3, 4, 3, 5, 6));
+    assert.strictEqual(10, Yatzy.pair(5, 3, 3, 3, 5));
+    assert.strictEqual(12, Yatzy.pair(5, 3, 6, 6, 5));
   });
   it('should scores 0 when user chooses pair category but no pair appears', () => {
-    assert.strictEqual(0, Yatzy.score_pair(3, 4, 1, 5, 6));
+    assert.strictEqual(0, Yatzy.pair(3, 4, 1, 5, 6));
   });
 });
 
 describe('Two pairs category', () => {
   it('should score the sum of the two pairs when player chooses two pairs category', () => {
-    assert.strictEqual(16, Yatzy.two_pair(3, 3, 5, 4, 5));
-    assert.strictEqual(16, Yatzy.two_pair(3, 3, 5, 5, 5));
+    assert.strictEqual(16, Yatzy.two_pairs(3, 3, 5, 4, 5));
+    assert.strictEqual(16, Yatzy.two_pairs(3, 3, 5, 5, 5));
   });
   it('should score 0 when player chooses two pairs category but no two pairs appear', () => {
-    assert.strictEqual(0, Yatzy.two_pair(3, 1, 5, 4, 5));
-    assert.strictEqual(0, Yatzy.two_pair(3, 2, 6, 4, 5));
+    assert.strictEqual(0, Yatzy.two_pairs(3, 1, 5, 4, 5));
+    assert.strictEqual(0, Yatzy.two_pairs(3, 2, 6, 4, 5));
   });
 });
 
