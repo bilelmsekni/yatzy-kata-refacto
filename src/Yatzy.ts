@@ -1,5 +1,6 @@
-export class Yatzy {
+import { RollResult } from "./RollResult";
 
+export class Yatzy {
 
   static chance(d1: number, d2: number, d3: number, d4: number, d5: number): number {
     return d1 + d2 + d3 + d4 + d5;
@@ -18,27 +19,45 @@ export class Yatzy {
   }
 
   static ones(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return this.filterNumbersByThenCalculateSum(1, d1, d2, d3, d4, d5)
+    return RollResult
+      .init(d1, d2, d3, d4, d5)
+      .filterNumbersBy(1)
+      .sum();
   }
 
   static twos(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return this.filterNumbersByThenCalculateSum(2, d1, d2, d3, d4, d5)
+    return RollResult
+      .init(d1, d2, d3, d4, d5)
+      .filterNumbersBy(2)
+      .sum();
   }
 
   static threes(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return this.filterNumbersByThenCalculateSum(3, d1, d2, d3, d4, d5)
+    return RollResult
+      .init(d1, d2, d3, d4, d5)
+      .filterNumbersBy(3)
+      .sum();
   }
 
   static fours(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return this.filterNumbersByThenCalculateSum(4, d1, d2, d3, d4, d5)
+    return RollResult
+      .init(d1, d2, d3, d4, d5)
+      .filterNumbersBy(4)
+      .sum();
   }
 
   static fives(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return this.filterNumbersByThenCalculateSum(5, d1, d2, d3, d4, d5)
+    return RollResult
+      .init(d1, d2, d3, d4, d5)
+      .filterNumbersBy(5)
+      .sum();
   }
 
   static sixes(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return this.filterNumbersByThenCalculateSum(6, d1, d2, d3, d4, d5)
+    return RollResult
+      .init(d1, d2, d3, d4, d5)
+      .filterNumbersBy(6)
+      .sum();
   }
 
   static pair(d1: number, d2: number, d3: number, d4: number, d5: number): number {
@@ -80,7 +99,6 @@ export class Yatzy {
     return 0;
   }
 
-
   static threeOfAKind(d1: number, d2: number, d3: number, d4: number, d5: number): number {
     const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
       if (acc[curr]) {
@@ -116,7 +134,6 @@ export class Yatzy {
 
     return fourOfAKindKey ? fourOfAKindKey * 4 : 0;
   }
-
 
   static smallStraight(d1: number, d2: number, d3: number, d4: number, d5: number): number {
     const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
@@ -161,11 +178,5 @@ export class Yatzy {
       return diceValuesAppearedTwice * 2 + diceValuesAppearedThrice * 3;
     }
     return 0;
-  }
-
-  private static filterNumbersByThenCalculateSum(filter: number, d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return [d1, d2, d3, d4, d5]
-      .filter(n => n === filter)
-      .reduce((acc, curr) => acc += curr, 0);
   }
 }
