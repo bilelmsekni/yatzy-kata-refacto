@@ -158,8 +158,13 @@ describe('Large straight category', () => {
 describe('Full house category', () => {
   it('should score the sum of the full house when player chooses full house category', () => {
     assert.strictEqual(18, Yatzy.fullHouse(6, 2, 2, 2, 6));
+    assert.strictEqual(18, Yatzy.fullHouse(2, 2, 2, 6, 6));
   });
   it('should score the sum of the full house when player chooses full house category but no full house appears', () => {
     assert.strictEqual(0, Yatzy.fullHouse(2, 3, 4, 5, 6));
+    assert.strictEqual(0, Yatzy.fullHouse(2, 6, 4, 5, 6));
+    assert.strictEqual(0, Yatzy.fullHouse(2, 6, 4, 6, 6));
+    assert.strictEqual(0, Yatzy.fullHouse(6, 6, 6, 5, 6));
+    assert.strictEqual(0, Yatzy.fullHouse(6, 6, 6, 6, 6));
   });
 });
