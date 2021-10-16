@@ -47,6 +47,17 @@ export class RollResult {
             .sort((a, b) => b - a);
     }
 
+    static sortValues(): typeof RollResult {
+        if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
+        this.rollResult = this.rollResult.sort();
+        return this;
+    }
+
+    static isEqualTo(array: number[]): boolean {
+        if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
+        return this.rollResult.length === array?.length && !this.rollResult.some((rr, i) => rr !== array[i]);
+    }
+
     static sum(): number {
         if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
         return this.rollResult

@@ -78,31 +78,19 @@ export class Yatzy {
   }
 
   static smallStraight(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
-      if (acc[curr]) {
-        acc[curr]++;
-      } else {
-        acc[curr] = 1;
-      }
-      return acc;
-    }, {} as { [key: number]: number });
-    const areAllValuesAppearedOnce = Object.values(appearancesByDiceValues).every(appearances => appearances === 1);
-    const hasSixValueAppeared = Object.keys(appearancesByDiceValues).map(key => +key).includes(6);
-    return areAllValuesAppearedOnce && !hasSixValueAppeared ? 15 : 0;
+    const isSmallStraight = RollResult
+      .init(d1, d2, d3, d4, d5)
+      .sortValues()
+      .isEqualTo([1, 2, 3, 4, 5]);
+    return isSmallStraight ? 15 : 0;
   }
 
   static largeStraight(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
-      if (acc[curr]) {
-        acc[curr]++;
-      } else {
-        acc[curr] = 1;
-      }
-      return acc;
-    }, {} as { [key: number]: number });
-    const areAllValuesAppearedOnce = Object.values(appearancesByDiceValues).every(appearances => appearances === 1);
-    const hasOneValueAppeared = Object.keys(appearancesByDiceValues).map(key => +key).includes(1);
-    return areAllValuesAppearedOnce && !hasOneValueAppeared ? 20 : 0;
+    const isLargeStraight = RollResult
+      .init(d1, d2, d3, d4, d5)
+      .sortValues()
+      .isEqualTo([2, 3, 4, 5, 6]);
+    return isLargeStraight ? 20 : 0;
   }
 
   static fullHouse(d1: number, d2: number, d3: number, d4: number, d5: number): number {
