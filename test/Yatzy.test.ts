@@ -141,6 +141,7 @@ describe('Small straight category', () => {
   });
   it('should score 0 when player chooses small straight category but no small straight appear', () => {
     assert.strictEqual(0, Yatzy.smallStraight(1, 2, 2, 4, 5));
+    assert.strictEqual(0, Yatzy.smallStraight(2, 3, 4, 5, 6));
   });
 });
 

@@ -119,15 +119,17 @@ export class Yatzy {
 
 
   static smallStraight(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var tallies;
-    tallies = [0, 0, 0, 0, 0, 0, 0];
-    tallies[d1 - 1] += 1;
-    tallies[d2 - 1] += 1;
-    tallies[d3 - 1] += 1;
-    tallies[d4 - 1] += 1;
-    tallies[d5 - 1] += 1;
-    if (tallies[0] == 1 && tallies[1] == 1 && tallies[2] == 1 && tallies[3] == 1 && tallies[4] == 1) return 15;
-    return 0;
+    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
+      if (acc[curr]) {
+        acc[curr]++;
+      } else {
+        acc[curr] = 1;
+      }
+      return acc;
+    }, {} as { [key: number]: number });
+    const areAllValuesAppearedOnce = Object.values(appearancesByDiceValues).every(appearances => appearances === 1);
+    const hasSixValueAppeared = Object.keys(appearancesByDiceValues).map(key => +key).includes(6);
+    return areAllValuesAppearedOnce && !hasSixValueAppeared ? 15 : 0;
   }
 
   static largeStraight(d1: number, d2: number, d3: number, d4: number, d5: number): number {
