@@ -1,105 +1,62 @@
-import { RollResult } from "./RollResult";
+import { chance } from "./ChanceCategory";
+import { fives } from "./FivesCategory";
+import { fourOfAKind } from "./FourOfAKindCategory";
+import { fours } from "./FoursCategory";
+import { fullHouse } from "./FullHouseCategory";
+import { largeStraight } from "./LargeStraightCategory";
+import { ones } from "./OnesCategory";
+import { pair } from "./PairCategory";
+import { sixes } from "./SixesCategory";
+import { smallStraight } from "./SmallStraightCategory";
+import { threeOfAKind } from "./ThreeOfAKindCategory";
+import { threes } from "./ThreesCategory";
+import { twoPairs } from "./TwoPairsCategory";
+import { twos } from "./TwosCategory";
+import { yatzy } from "./YatzyCategory";
+
+export const enum CategoryEnum {
+  Chance = 'chance',
+  Yatzy = 'yatzy',
+  Ones = 'ones',
+  Twos = 'twos',
+  Threes = 'threes',
+  Fours = 'fours',
+  Fives = 'fives',
+  Sixes = 'sixes',
+  Pair = 'pair',
+  TwoPairs = 'twoPairs',
+  ThreeOfAKind = 'threeOfAKind',
+  fourOfAKind = 'fourOfAKind',
+  smallStraight = 'smallStraight',
+  largeStraight = 'largeStraight',
+  fullHouse = 'fullHouse'
+}
 
 export class Yatzy {
 
-  static chance(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return RollResult.init(d1, d2, d3, d4, d5).sum();
+  private static categoryDictionary: { [key in CategoryEnum]: (d1: number, d2: number, d3: number, d4: number, d5: number) => number } = {
+    [CategoryEnum.Chance]: chance,
+    [CategoryEnum.Yatzy]: yatzy,
+    [CategoryEnum.Ones]: ones,
+    [CategoryEnum.Twos]: twos,
+    [CategoryEnum.Threes]: threes,
+    [CategoryEnum.Fours]: fours,
+    [CategoryEnum.Fives]: fives,
+    [CategoryEnum.Sixes]: sixes,
+    [CategoryEnum.Pair]: pair,
+    [CategoryEnum.TwoPairs]: twoPairs,
+    [CategoryEnum.ThreeOfAKind]: threeOfAKind,
+    [CategoryEnum.fourOfAKind]: fourOfAKind,
+    [CategoryEnum.smallStraight]: smallStraight,
+    [CategoryEnum.largeStraight]: largeStraight,
+    [CategoryEnum.fullHouse]: fullHouse,
   }
 
-  static yatzy(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const hasAValueAppearedFiveTimes = RollResult.init(d1, d2, d3, d4, d5).hasAValueAppearedFiveTimes();
-    return hasAValueAppearedFiveTimes ? 50 : 0;
-  }
-
-  static ones(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return RollResult
-      .init(d1, d2, d3, d4, d5)
-      .filterNumbersBy(1)
-      .sum();
-  }
-
-  static twos(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return RollResult
-      .init(d1, d2, d3, d4, d5)
-      .filterNumbersBy(2)
-      .sum();
-  }
-
-  static threes(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return RollResult
-      .init(d1, d2, d3, d4, d5)
-      .filterNumbersBy(3)
-      .sum();
-  }
-
-  static fours(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return RollResult
-      .init(d1, d2, d3, d4, d5)
-      .filterNumbersBy(4)
-      .sum();
-  }
-
-  static fives(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return RollResult
-      .init(d1, d2, d3, d4, d5)
-      .filterNumbersBy(5)
-      .sum();
-  }
-
-  static sixes(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    return RollResult
-      .init(d1, d2, d3, d4, d5)
-      .filterNumbersBy(6)
-      .sum();
-  }
-
-  static pair(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const [highestPair,] = RollResult.init(d1, d2, d3, d4, d5).findHighestPairs();
-    return highestPair ? highestPair * 2 : 0;
-  }
-
-  static twoPairs(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const highestPairs = RollResult.init(d1, d2, d3, d4, d5).findHighestPairs();
-    if (highestPairs.length >= 2) {
-      const [firstPair, secondPair,] = highestPairs;
-      return firstPair * 2 + secondPair * 2;
+  static exec(category: CategoryEnum): (d1: number, d2: number, d3: number, d4: number, d5: number) => number {
+    const categoryFn = this.categoryDictionary[category];
+    if (categoryFn) {
+      return categoryFn;
     }
-    return 0;
-  }
-
-  static threeOfAKind(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const threeOfAKindValue = RollResult.init(d1, d2, d3, d4, d5).findValueWithAtLeastThreeAppearances();
-    return threeOfAKindValue ? threeOfAKindValue * 3 : 0;
-  }
-
-  static fourOfAKind(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const fourOfAKindKey = RollResult.init(d1, d2, d3, d4, d5).findValueWithAtLeastFourAppearances();
-    return fourOfAKindKey ? fourOfAKindKey * 4 : 0;
-  }
-
-  static smallStraight(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const isSmallStraight = RollResult
-      .init(d1, d2, d3, d4, d5)
-      .sortValues()
-      .isEqualTo([1, 2, 3, 4, 5]);
-    return isSmallStraight ? 15 : 0;
-  }
-
-  static largeStraight(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const isLargeStraight = RollResult
-      .init(d1, d2, d3, d4, d5)
-      .sortValues()
-      .isEqualTo([2, 3, 4, 5, 6]);
-    return isLargeStraight ? 20 : 0;
-  }
-
-  static fullHouse(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const rollResult = RollResult.init(d1, d2, d3, d4, d5);
-    const diceValuesAppearedTwice = rollResult.findValueWithTwoAppearances();
-    const diceValuesAppearedThrice = rollResult.findValueWithAtLeastThreeAppearances();
-    if (diceValuesAppearedTwice && diceValuesAppearedThrice && diceValuesAppearedTwice != diceValuesAppearedThrice) {
-      return diceValuesAppearedTwice * 2 + diceValuesAppearedThrice * 3;
-    }
-    return 0;
+    throw new Error(`unknown category: ${category})`);
   }
 }
