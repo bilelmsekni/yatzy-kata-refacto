@@ -68,12 +68,12 @@ export class Yatzy {
   }
 
   static threeOfAKind(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const threeOfAKindValue = RollResult.init(d1, d2, d3, d4, d5).findValueWithThreeAppearances();
+    const threeOfAKindValue = RollResult.init(d1, d2, d3, d4, d5).findValueWithAtLeastThreeAppearances();
     return threeOfAKindValue ? threeOfAKindValue * 3 : 0;
   }
 
   static fourOfAKind(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const fourOfAKindKey = RollResult.init(d1, d2, d3, d4, d5).findValueWithFourAppearances();
+    const fourOfAKindKey = RollResult.init(d1, d2, d3, d4, d5).findValueWithAtLeastFourAppearances();
     return fourOfAKindKey ? fourOfAKindKey * 4 : 0;
   }
 
@@ -94,17 +94,10 @@ export class Yatzy {
   }
 
   static fullHouse(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
-      if (acc[curr]) {
-        acc[curr]++;
-      } else {
-        acc[curr] = 1;
-      }
-      return acc;
-    }, {} as { [key: number]: number });
-    const diceValuesAppearedTwice = Object.keys(appearancesByDiceValues).map(key => +key).filter(key => appearancesByDiceValues[key] === 2).shift();
-    const diceValuesAppearedThrice = Object.keys(appearancesByDiceValues).map(key => +key).filter(key => appearancesByDiceValues[key] === 3).shift();
-    if (diceValuesAppearedTwice && diceValuesAppearedThrice) {
+    const rollResult = RollResult.init(d1, d2, d3, d4, d5);
+    const diceValuesAppearedTwice = rollResult.findValueWithTwoAppearances();
+    const diceValuesAppearedThrice = rollResult.findValueWithAtLeastThreeAppearances();
+    if (diceValuesAppearedTwice && diceValuesAppearedThrice && diceValuesAppearedTwice != diceValuesAppearedThrice) {
       return diceValuesAppearedTwice * 2 + diceValuesAppearedThrice * 3;
     }
     return 0;

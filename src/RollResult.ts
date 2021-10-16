@@ -18,24 +18,24 @@ export class RollResult {
         return Object.values(appearancesByDiceValues).includes(5);
     }
 
-    static findValueWithThreeAppearances(): number | undefined {
+    static findValueWithTwoAppearances(): number | undefined {
         if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
-        const appearancesByDiceValues = this.countAppearancesByDiceValue(this.rollResult);
-        const threeOfAKindKey = Object.keys(appearancesByDiceValues)
-            .map(key => +key)
-            .filter(key => appearancesByDiceValues[key] >= 3)
-            .shift();
-        return threeOfAKindKey;
+        return this.findValueWithAppearanceCountCondition(appearances => appearances == 2, this.rollResult);
     }
 
-    static findValueWithFourAppearances(): number | undefined {
+    static findValueWithThreeAppearances(): number | undefined {
         if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
-        const appearancesByDiceValues = this.countAppearancesByDiceValue(this.rollResult);
-        const threeOfAKindKey = Object.keys(appearancesByDiceValues)
-            .map(key => +key)
-            .filter(key => appearancesByDiceValues[key] >= 4)
-            .shift();
-        return threeOfAKindKey;
+        return this.findValueWithAppearanceCountCondition(appearances => appearances == 3, this.rollResult);
+    }
+
+    static findValueWithAtLeastThreeAppearances(): number | undefined {
+        if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
+        return this.findValueWithAppearanceCountCondition(appearances => appearances >= 3, this.rollResult);
+    }
+
+    static findValueWithAtLeastFourAppearances(): number | undefined {
+        if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
+        return this.findValueWithAppearanceCountCondition(appearances => appearances >= 4, this.rollResult);
     }
 
     static findHighestPairs(): number[] {
@@ -62,6 +62,14 @@ export class RollResult {
         if (!this.rollResult) throw new Error("RollResult has not been initialized, please use init method to initialize");
         return this.rollResult
             .reduce((acc, curr) => acc += curr, 0);
+    }
+
+    private static findValueWithAppearanceCountCondition(countConditionFn: (appearances: number) => boolean, array: number[]): number | undefined {
+        const appearancesByDiceValues = this.countAppearancesByDiceValue(array);
+        return Object.keys(appearancesByDiceValues)
+            .map(key => +key)
+            .filter(key => countConditionFn(appearancesByDiceValues[key]))
+            .shift();
     }
 
     private static countAppearancesByDiceValue(array: number[]): { [key: number]: number } {
