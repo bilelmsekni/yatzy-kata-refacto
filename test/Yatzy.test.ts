@@ -112,25 +112,25 @@ describe('Two pairs category', () => {
 
 describe('Three of a kind category', () => {
   it('should score the sum of the three of a kind when player chooses three of a kind', () => {
-    assert.strictEqual(9, Yatzy.three_of_a_kind(3, 3, 3, 4, 5));
-    assert.strictEqual(15, Yatzy.three_of_a_kind(5, 3, 5, 4, 5));
-    assert.strictEqual(9, Yatzy.three_of_a_kind(3, 3, 3, 3, 5));
+    assert.strictEqual(9, Yatzy.threeOfAKind(3, 3, 3, 4, 5));
+    assert.strictEqual(15, Yatzy.threeOfAKind(5, 3, 5, 4, 5));
+    assert.strictEqual(9, Yatzy.threeOfAKind(3, 3, 3, 3, 5));
   });
   it('should score 0 when player chooses three of a kind but no three of a kind appear', () => {
-    assert.strictEqual(0, Yatzy.three_of_a_kind(3, 2, 3, 4, 5));
+    assert.strictEqual(0, Yatzy.threeOfAKind(3, 2, 3, 4, 5));
   });
 });
 
 describe('Four of a kind category', () => {
   it('should score the sum of the four of a kind when player chooses four of a kind', () => {
-    assert.strictEqual(12, Yatzy.four_of_a_kind(3, 3, 3, 3, 5));
-    assert.strictEqual(20, Yatzy.four_of_a_kind(5, 5, 5, 4, 5));
-    assert.strictEqual(9, Yatzy.three_of_a_kind(3, 3, 3, 3, 3));
+    assert.strictEqual(12, Yatzy.fourOfAKind(3, 3, 3, 3, 5));
+    assert.strictEqual(20, Yatzy.fourOfAKind(5, 5, 5, 4, 5));
+    assert.strictEqual(9, Yatzy.threeOfAKind(3, 3, 3, 3, 3));
   });
   it('should score 0 of a kind when player chooses four of a kind but no four of a kind appear', () => {
-    assert.strictEqual(0, Yatzy.four_of_a_kind(3, 1, 3, 3, 5));
-    assert.strictEqual(0, Yatzy.four_of_a_kind(5, 2, 2, 4, 5));
-    assert.strictEqual(0, Yatzy.three_of_a_kind(3, 2, 1, 4, 5));
+    assert.strictEqual(0, Yatzy.fourOfAKind(3, 1, 3, 3, 5));
+    assert.strictEqual(0, Yatzy.fourOfAKind(5, 2, 2, 4, 5));
+    assert.strictEqual(0, Yatzy.threeOfAKind(3, 2, 1, 4, 5));
   });
 });
 

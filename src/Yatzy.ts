@@ -80,7 +80,26 @@ export class Yatzy {
     return 0;
   }
 
-  static four_of_a_kind(_1: number, _2: number, d3: number, d4: number, d5: number): number {
+
+  static threeOfAKind(d1: number, d2: number, d3: number, d4: number, d5: number): number {
+    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
+      if (acc[curr]) {
+        acc[curr]++;
+      } else {
+        acc[curr] = 1;
+      }
+      return acc;
+    }, {} as { [key: number]: number });
+
+    const threeOfAKindKey = Object.keys(appearancesByDiceValues)
+      .map(key => +key)
+      .filter(key => appearancesByDiceValues[key] >= 3)
+      .shift();
+
+    return threeOfAKindKey ? threeOfAKindKey * 3 : 0;
+  }
+
+  static fourOfAKind(_1: number, _2: number, d3: number, d4: number, d5: number): number {
     var tallies;
     tallies = [0, 0, 0, 0, 0, 0, 0, 0];
     tallies[_1 - 1]++;
@@ -92,17 +111,6 @@ export class Yatzy {
     return 0;
   }
 
-  static three_of_a_kind(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var t;
-    t = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-    t[d1 - 1]++;
-    t[d2 - 1]++;
-    t[d3 - 1]++;
-    t[d4 - 1]++;
-    t[d5 - 1]++;
-    for (let i = 0; i < 6; i++) if (t[i] >= 3) return (i + 1) * 3;
-    return 0;
-  }
 
   static smallStraight(d1: number, d2: number, d3: number, d4: number, d5: number): number {
     var tallies;
