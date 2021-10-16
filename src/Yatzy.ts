@@ -5,14 +5,16 @@ export class Yatzy {
     return d1 + d2 + d3 + d4 + d5;
   }
 
-  static yatzy(...args: number[]): number {
-    var counts = [0, 0, 0, 0, 0, 0, 0, 0];
-    for (var i = 0; i != args.length; ++i) {
-      var die = args[i];
-      counts[die - 1]++;
-    }
-    for (i = 0; i != 6; i++) if (counts[i] == 5) return 50;
-    return 0;
+  static yatzy(d1: number, d2: number, d3: number, d4: number, d5: number): number {
+    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
+      if (acc[curr]) {
+        acc[curr]++;
+      } else {
+        acc[curr] = 1;
+      }
+      return acc;
+    }, {})
+    return Object.values(appearancesByDiceValues).includes(5) ? 50 : 0;
   }
 
   static ones(d1: number, d2: number, d3: number, d4: number, d5: number): number {
