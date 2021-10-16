@@ -59,22 +59,25 @@ export class Yatzy {
     return highestPair ? highestPair * 2 : 0;
   }
 
-  static two_pair(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-    counts[d1 - 1]++;
-    counts[d2 - 1]++;
-    counts[d3 - 1]++;
-    counts[d4 - 1]++;
-    counts[d5 - 1]++;
-    var n = 0;
-    var score = 0;
-    for (let i = 0; i < 6; i += 1)
-      if (counts[6 - i - 1] >= 2) {
-        n++;
-        score += 6 - i;
+  static twoPairs(d1: number, d2: number, d3: number, d4: number, d5: number): number {
+    const appearancesByDiceValues = [d1, d2, d3, d4, d5].reduce((acc: { [key: number]: number }, curr: number) => {
+      if (acc[curr]) {
+        acc[curr]++;
+      } else {
+        acc[curr] = 1;
       }
-    if (n == 2) return score * 2;
-    else return 0;
+      return acc;
+    }, {} as { [key: number]: number });
+
+    const highestPairs = Object.keys(appearancesByDiceValues)
+      .map(key => +key)
+      .filter(key => appearancesByDiceValues[key] >= 2)
+      .sort((a, b) => b - a);
+    if (highestPairs.length >= 2) {
+      const [firstPair, secondPair,] = highestPairs;
+      return firstPair * 2 + secondPair * 2;
+    }
+    return 0;
   }
 
   static four_of_a_kind(_1: number, _2: number, d3: number, d4: number, d5: number): number {

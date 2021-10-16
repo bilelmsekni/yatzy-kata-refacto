@@ -99,12 +99,14 @@ describe('Pair category', () => {
 
 describe('Two pairs category', () => {
   it('should score the sum of the two pairs when player chooses two pairs category', () => {
-    assert.strictEqual(16, Yatzy.two_pairs(3, 3, 5, 4, 5));
-    assert.strictEqual(16, Yatzy.two_pairs(3, 3, 5, 5, 5));
+    assert.strictEqual(16, Yatzy.twoPairs(3, 3, 5, 4, 5));
+    assert.strictEqual(16, Yatzy.twoPairs(3, 3, 5, 5, 5));
+
   });
   it('should score 0 when player chooses two pairs category but no two pairs appear', () => {
-    assert.strictEqual(0, Yatzy.two_pairs(3, 1, 5, 4, 5));
-    assert.strictEqual(0, Yatzy.two_pairs(3, 2, 6, 4, 5));
+    assert.strictEqual(0, Yatzy.twoPairs(3, 1, 5, 4, 5));
+    assert.strictEqual(0, Yatzy.twoPairs(3, 2, 6, 4, 5));
+    assert.strictEqual(0, Yatzy.twoPairs(3, 3, 3, 3, 5));
   });
 });
 
